@@ -18,18 +18,18 @@
    6. calculate principle and interest given period
    7. calculate principle and period given interest
    8. calculate principle, period, and interest
-   */
+*/
 
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
 #include <string.h>
 
-#define SHOW_DEFAULT   0x00
-#define SHOW_PAYMENT   0x01
-#define SHOW_PERIOD    0x02
-#define SHOW_RATE      0x04
-#define SHOW_PRINCIPLE 0x08
+#include <unistd.h> // getopt
+
+#define SHOW_DEFAULT 0x00
+#define SHOW_PERIOD  0x01
+#define SHOW_RATE    0x02
 
 void usage()
 {
@@ -145,7 +145,7 @@ void calcPrinciple(double monthlyPayment, double numberPayments,
 
     if(options & SHOW_PERIOD)
     {
-        printf("Payments: %-12.2f\t", numberPayments);
+        printf("Num Payments: %-12.2f\t", numberPayments);
     }
 
     if(options & SHOW_RATE)
@@ -206,38 +206,29 @@ int main(int argc, char *argv[])
     double numberPayments = -999;
     int retval = EXIT_FAILURE;
 
-    if(0 == --argc)
+    int c;
+    while((c = getopt(argc, argv, "h:i:p:t:m:")) != -1)
     {
-        usage();
-        return retval;
-    }
-    else
-    {
-        while(argc)
+        switch(c)
         {
-            //        printf("argc = %d, argv = %s\n", argc, argv[argc]);
-            if(strcmp(argv[argc], "-h") == 0)
-            {
+            case 'h':
                 help();
-            }
-            else if(strcmp(argv[argc], "-i") == 0)
-            {
-                yearlyInterestRate = strtod(argv[argc + 1], NULL);
-            }
-            else if(strcmp(argv[argc], "-p") == 0)
-            {
-                principleAmount = strtod(argv[argc + 1], NULL);
-            }
-            else if(strcmp(argv[argc], "-t") == 0)
-            {
-                numberPayments = strtod(argv[argc + 1], NULL);
-            }
-            else if(strcmp(argv[argc], "-m") == 0)
-            {
-                monthlyPayment = strtod(argv[argc + 1], NULL);
-            }
-
-            --argc;
+                break;
+            case 'i':
+                yearlyInterestRate = strtod(optarg, NULL);
+                break;
+            case 'p':
+                principleAmount = strtod(optarg, NULL);
+                break;
+            case 't':
+                numberPayments = strtod(optarg, NULL);
+                break;
+            case 'm':
+                monthlyPayment = strtod(optarg, NULL);
+                break;
+            default:
+                usage();
+                break;
         }
     }
 
