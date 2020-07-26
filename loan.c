@@ -34,31 +34,31 @@
 void usage()
 {
     printf("\nUsage: loan -p principle [-i interest_rate | -t loan_period]"
-            "\n       loan -m payment [-i interest_rate | -t loan_period]"
-            "\nExample: loan -i 7.0 -p 39000.00 -t 60.0\n\n"
-            "-i  simple yearly interest rate\n"
-            "-p  principle amount of loan\n"
-            "-t  loan period in months (ie. number of payments)\n"
-            "-m  monthly payment\n"
-            "-h  help I don't understand\n\n"
-            "ordering of arguments does not matter\n"
-            "unspecified arguments will be solved if possible\n"
-            "Report bugs to <steve.connet@cox.net>\n\n");
+           "\n       loan -m payment [-i interest_rate | -t loan_period]"
+           "\nExample: loan -i 7.0 -p 39000.00 -t 60.0\n\n"
+           "-i  simple yearly interest rate\n"
+           "-p  principle amount of loan\n"
+           "-t  loan period in months (ie. number of payments)\n"
+           "-m  monthly payment\n"
+           "-h  help I don't understand\n\n"
+           "ordering of arguments does not matter\n"
+           "unspecified arguments will be solved if possible\n"
+           "Report bugs to <steve.connet@cox.net>\n\n");
 }
 
 void help()
 {
     printf("Definitions:\n"
-            "Break Even Years = number of years to pay off principle if"
-            " payment went to principle alone.\n"
-            "Interest%% = Total interest paid as a percentage of Principal.\n");
+           "Break Even Years = number of years to pay off principle if"
+           " payment went to principle alone.\n"
+           "Interest%% = Total interest paid as a percentage of Principal.\n");
 }
 
 // ----------------------------------------------------------------------------
 
 // calculate monthly payment given interest and period
 void calcPayment(double principleAmount, double yearlyInterestRate,
-        double numberPayments, int options)
+                 double numberPayments, int options)
 {
     double monthlyInterestRate = yearlyInterestRate / 1200.0;
     double x = pow(1 + monthlyInterestRate, -numberPayments);
@@ -72,29 +72,29 @@ void calcPayment(double principleAmount, double yearlyInterestRate,
 
     printf("Monthly: %-12.2f\t", monthlyPayment);
 
-    if (options & SHOW_PERIOD)
+    if(options & SHOW_PERIOD)
     {
         printf("Num Payments: %-12.2f\t", numberPayments);
     }
 
-    if (options & SHOW_RATE)
+    if(options & SHOW_RATE)
     {
         printf("Rate: %-12.2f\t", yearlyInterestRate);
     }
 
     printf("Interest: %-12.2f\tTotal: %-12.2f\tInterest%%: %-12.2f"
-            "\tBreakeven: %-12.2f\n",
-            interestPaid, totalPaid, interestPaidPercent, breakEvenYears);
+           "\tBreakeven: %-12.2f\n",
+           interestPaid, totalPaid, interestPaidPercent, breakEvenYears);
 }
 
 // calculate monthly payment given interest
 void calcPaymentAndPeriod(double principleAmount, double yearlyInterestRate)
 {
     double numberPayments = 12;
-    while (numberPayments <= 360)
+    while(numberPayments <= 360)
     {
         calcPayment(principleAmount, yearlyInterestRate, numberPayments,
-                SHOW_PERIOD);
+                    SHOW_PERIOD);
         numberPayments += 12.0;
     }
 }
@@ -103,10 +103,10 @@ void calcPaymentAndPeriod(double principleAmount, double yearlyInterestRate)
 void calcPaymentAndInterest(double principleAmount, double numberPayments)
 {
     double interestRate = 1.0;
-    while (interestRate < 26.0)
+    while(interestRate < 26.0)
     {
         calcPayment(principleAmount, interestRate, numberPayments,
-                SHOW_RATE);
+                    SHOW_RATE);
         interestRate += 1.0;
     }
 }
@@ -115,7 +115,7 @@ void calcPaymentAndInterest(double principleAmount, double numberPayments)
 void calcPaymentPeriodAndInterest(double principleAmount)
 {
     double numberPayments = 12;
-    while (numberPayments <= 360)
+    while(numberPayments <= 360)
     {
         printf("Num Payments: %-12.2f\n", numberPayments);
         calcPaymentAndInterest(principleAmount, numberPayments);
@@ -129,7 +129,7 @@ void calcPaymentPeriodAndInterest(double principleAmount)
 
 // calculate principle given period and interest
 void calcPrinciple(double monthlyPayment, double numberPayments,
-        double yearlyInterestRate, int options)
+                   double yearlyInterestRate, int options)
 {
     double monthlyInterestRate = yearlyInterestRate / 1200.0;
     double x = pow(1 + monthlyInterestRate, -numberPayments);
@@ -143,29 +143,29 @@ void calcPrinciple(double monthlyPayment, double numberPayments,
 
     printf("Principle: %-12.2f\t", principleAmount);
 
-    if (options & SHOW_PERIOD)
+    if(options & SHOW_PERIOD)
     {
         printf("Payments: %-12.2f\t", numberPayments);
     }
 
-    if (options & SHOW_RATE)
+    if(options & SHOW_RATE)
     {
         printf("Rate: %-12.2f\t", yearlyInterestRate);
     }
 
     printf("Interest: %-12.2f\tTotal: %-12.2f\tInterest%%: %-12.2f\t"
-            "Breakeven: %-12.2f\n",
-            interestPaid, totalPaid, interestPaidPercent, breakEvenYears);
+           "Breakeven: %-12.2f\n",
+           interestPaid, totalPaid, interestPaidPercent, breakEvenYears);
 }
 
 // calculate principle and interest given period
 void calcPrincipleAndInterest(double monthlyPayment, double numberPayments)
 {
     double interestRate = 1.0;
-    while (interestRate < 25.0)
+    while(interestRate < 25.0)
     {
         calcPrinciple(monthlyPayment, numberPayments, interestRate,
-                SHOW_RATE);
+                      SHOW_RATE);
         interestRate += 1.0;
     }
 }
@@ -174,10 +174,10 @@ void calcPrincipleAndInterest(double monthlyPayment, double numberPayments)
 void calcPrincipleAndPeriod(double monthlyPayment, double yearlyInterestRate)
 {
     double numberPayments = 12;
-    while (numberPayments <= 360)
+    while(numberPayments <= 360)
     {
         calcPrinciple(monthlyPayment, numberPayments, yearlyInterestRate,
-                SHOW_PERIOD);
+                      SHOW_PERIOD);
         numberPayments += 12.0;
     }
 }
@@ -186,7 +186,7 @@ void calcPrincipleAndPeriod(double monthlyPayment, double yearlyInterestRate)
 void calcPrinciplePeriodAndInterest(double monthlyPayment)
 {
     double numberPayments = 12;
-    while (numberPayments <= 360)
+    while(numberPayments <= 360)
     {
         printf("Num Payments: %-12.2f\n", numberPayments);
         calcPrincipleAndInterest(monthlyPayment, numberPayments);
@@ -198,7 +198,7 @@ void calcPrinciplePeriodAndInterest(double monthlyPayment)
 
 // ----------------------------------------------------------------------------
 
-int main(int argc, char* argv[])
+int main(int argc, char *argv[])
 {
     double principleAmount = -999;
     double monthlyPayment = -999;
@@ -211,32 +211,34 @@ int main(int argc, char* argv[])
         usage();
         return retval;
     }
-
-    else while(argc)
+    else
     {
-        //        printf("argc = %d, argv = %s\n", argc, argv[argc]);
-        if(strcmp(argv[argc], "-h") == 0)
+        while(argc)
         {
-            help();
-        }
-        else if(strcmp(argv[argc], "-i") == 0)
-        {
-            yearlyInterestRate = strtod(argv[argc + 1], NULL);
-        }
-        else if(strcmp(argv[argc], "-p") == 0)
-        {
-            principleAmount = strtod(argv[argc + 1], NULL);
-        }
-        else if(strcmp(argv[argc], "-t") == 0)
-        {
-            numberPayments = strtod(argv[argc + 1], NULL);
-        }
-        else if(strcmp(argv[argc], "-m") == 0)
-        {
-            monthlyPayment = strtod(argv[argc + 1], NULL);
-        }
+            //        printf("argc = %d, argv = %s\n", argc, argv[argc]);
+            if(strcmp(argv[argc], "-h") == 0)
+            {
+                help();
+            }
+            else if(strcmp(argv[argc], "-i") == 0)
+            {
+                yearlyInterestRate = strtod(argv[argc + 1], NULL);
+            }
+            else if(strcmp(argv[argc], "-p") == 0)
+            {
+                principleAmount = strtod(argv[argc + 1], NULL);
+            }
+            else if(strcmp(argv[argc], "-t") == 0)
+            {
+                numberPayments = strtod(argv[argc + 1], NULL);
+            }
+            else if(strcmp(argv[argc], "-m") == 0)
+            {
+                monthlyPayment = strtod(argv[argc + 1], NULL);
+            }
 
-        --argc;
+            --argc;
+        }
     }
 
     //    printf("yearlyInterestRate: %-12.2f\n", yearlyInterestRate);
@@ -264,7 +266,7 @@ int main(int argc, char* argv[])
         {
             // calculate principle given period and interest
             calcPrinciple(monthlyPayment, numberPayments, yearlyInterestRate,
-                    SHOW_DEFAULT);
+                          SHOW_DEFAULT);
         }
         else if(yearlyInterestRate > 0)
         {
@@ -291,7 +293,7 @@ int main(int argc, char* argv[])
         if(numberPayments > 0 && yearlyInterestRate > 0)
         {
             calcPayment(principleAmount, yearlyInterestRate, numberPayments,
-                    SHOW_DEFAULT);
+                        SHOW_DEFAULT);
         }
         else if(yearlyInterestRate > 0)
         {
