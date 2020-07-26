@@ -18,8 +18,7 @@
    6. calculate principle and interest given period
    7. calculate principle and period given interest
    8. calculate principle, period, and interest
-
-*/
+   */
 
 #include <stdio.h>
 #include <math.h>
@@ -84,8 +83,8 @@ void calcPayment(double principleAmount, double yearlyInterestRate,
     }
 
     printf("Interest: %-12.2f\tTotal: %-12.2f\tInterest%%: %-12.2f"
-           "\tBreakeven: %-12.2f\n",
-           interestPaid, totalPaid, interestPaidPercent, breakEvenYears);
+            "\tBreakeven: %-12.2f\n",
+            interestPaid, totalPaid, interestPaidPercent, breakEvenYears);
 }
 
 // calculate monthly payment given interest
@@ -138,6 +137,7 @@ void calcPrinciple(double monthlyPayment, double numberPayments,
 
     double totalPaid = monthlyPayment * numberPayments;
     double interestPaid = totalPaid - principleAmount;
+    double interestPaidPercent = (interestPaid / principleAmount) * 100.0;
 
     double breakEvenYears = (principleAmount / monthlyPayment) / 12.0;
 
@@ -153,8 +153,9 @@ void calcPrinciple(double monthlyPayment, double numberPayments,
         printf("Rate: %-12.2f\t", yearlyInterestRate);
     }
 
-    printf("Interest: %-12.2f\tTotal: %-12.2f\tBreakeven: %-12.2f\n",
-            interestPaid, totalPaid, breakEvenYears);
+    printf("Interest: %-12.2f\tTotal: %-12.2f\tInterest%%: %-12.2f\t"
+            "Breakeven: %-12.2f\n",
+            interestPaid, totalPaid, interestPaidPercent, breakEvenYears);
 }
 
 // calculate principle and interest given period
